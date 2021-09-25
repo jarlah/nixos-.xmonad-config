@@ -89,6 +89,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,xF86XK_AudioMute           ), toggleMute >> return ())
     , ((0,xF86XK_AudioLowerVolume    ), lowerVolume 4 >> setMute True >> return ())
     , ((0,xF86XK_AudioRaiseVolume    ), raiseVolume 4 >> setMute True >> return ())
+    , ((0,xF86XK_MonBrightnessUp    ), spawn "light -A 10")
+    , ((0,xF86XK_MonBrightnessDown   ), spawn "light -U 10")
     
     -- Bind AudioStart /AudioStop etc to do something like this:
     --   dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Play
@@ -266,6 +268,7 @@ myLogHook = return ()
 --
 -- By default, do nothing.
 myStartupHook = spawn "feh --bg-fill /home/jarlandre/Downloads/wallpaper.jpg"
+                >> spawn "xscreensaver -no-splash &"
                 >> spawn "xsetroot -cursor_name left_ptr"
 
 ------------------------------------------------------------------------
