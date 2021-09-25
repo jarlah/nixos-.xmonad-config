@@ -1,0 +1,13 @@
+Install (at least) these packages with `apt`:
+
+xmonad, xmobar, feh, compton, xmonad-contrib, ghc, cabal-install, rofi, fonts-font-awesome,
+xscreensaver
+
+libasound2-dev, happy, alex (for xmonad-extras)
+
+shutter (for screenshots)
+
+Install these with cabal:
+
+c2hs
+xmonad-extras
