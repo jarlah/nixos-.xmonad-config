@@ -267,7 +267,7 @@ myLogHook = return ()
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = spawn "feh --bg-fill /home/jarlandre/Downloads/wallpaper.jpg"
+myStartupHook = spawn "feh --bg-fill /home/jarlandre/.xmonad/wallpaper.jpg"
                 >> spawn "xscreensaver -no-splash &"
                 >> spawn "xsetroot -cursor_name left_ptr"
 
