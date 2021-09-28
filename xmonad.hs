@@ -155,9 +155,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-
-    -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modm .|. shiftMask, xK_h ), spawn ("echo \"" ++ help ++ "\" | code -"))
     ]
     ++
 
@@ -204,8 +201,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- Gaps around and between windows
 -- Changes only seem to apply if I log out then in again
 -- Dimensions are given as (Border top bottom right left)
-mySpacing = spacingRaw True             -- Only for >1 window
-                       -- The bottom edge seems to look narrower than it is
+mySpacing = spacingRaw False             -- For all windows, set to false for only more than 1
                        (Border 0 15 10 10) -- Size of screen edge gaps
                        True             -- Enable screen edge gaps
                        (Border 5 5 5 5) -- Size of window gaps
