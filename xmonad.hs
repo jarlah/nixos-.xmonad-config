@@ -82,9 +82,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
-    -- launch screenshot
-    , ((modm,       xK_s     ), spawn myScreenshotUtil)
-
+    -- lock screen
     , ((modm .|. shiftMask, xK_l), spawn "xscreensaver-command -lock")
 
     -- volume control
@@ -270,18 +268,18 @@ myLogHook = return ()
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = spawn "feh --bg-fill /home/jarlandre/.xmonad/wallpaper.jpg"
+myStartupHook = spawn "feh --bg-fill ~/.xmonad/wallpaper.jpg"
                 >> spawn "xscreensaver -no-splash &"
                 >> spawn "xsetroot -cursor_name left_ptr"
+                >> spawn "xmobar -x0 ~/.xmonad/xmobar.conf"
 
 ------------------------------------------------------------------------
 -- Xmobar 
 -- myBar = "xmobar"
 --
-myStatusBar = "xmobar -x0 /home/jarlandre/.xmonad/xmobar.conf"
+myStatusBar = "xmobar -x0 ~/.xmonad/xmobar.conf"
 myLauncher  = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun"
 myBrowser   = "firefox"
-myScreenshotUtil = "shutter -s"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
