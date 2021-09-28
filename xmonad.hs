@@ -19,7 +19,9 @@ import XMonad.Util.Run          -- for spawnPipe and hPutStrLn
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
-
+import XMonad.Hooks.ManageDocks
+import XMonad.Layout.PerWorkspace
+import XMonad.Config.Desktop -- default desktopConfig
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -201,20 +203,21 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------------------
 -- Layouts:
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
---myLayout =  myGaps (Tall 1 (3/100) (1/2))
---       ||| noBorders (fullscreenFull Full)
---  where myGaps = lessBorders OnlyFloat
---               . avoidStruts
---               . spacing 4
---               . gaps [(U,4), (D,4), (R,4), (L,4)]
+-- Gaps around and between windows
+-- Changes only seem to apply if I log out then in again
+-- Dimensions are given as (Border top bottom right left)
+mySpacing = spacingRaw True             -- Only for >1 window
+                       -- The bottom edge seems to look narrower than it is
+                       (Border 0 15 10 10) -- Size of screen edge gaps
+                       True             -- Enable screen edge gaps
+                       (Border 5 5 5 5) -- Size of window gaps
+                       True             -- Enable window gaps
+
+myNormalBorderColour, myFocusedBorderColour :: [Char]
+myNormalBorderColour = "#111111"
+myFocusedBorderColour = "#268bd2"
+
+myLayout = avoidStruts $ mySpacing $ smartBorders (layoutHook desktopConfig)
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -305,6 +308,8 @@ defaults p = def {
         modMask            = myModMask,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
+
+        layoutHook = myLayout,
 
       -- key bindings
         keys               = myKeys,
