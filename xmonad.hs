@@ -25,6 +25,13 @@ import XMonad.Config.Desktop -- default desktopConfig
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+import XMonad.Layout.Renamed
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Spacing
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.LayoutModifier(ModifiedLayout)
+import Distribution.Verbosity (normal)
+
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
@@ -270,7 +277,7 @@ myLogHook = return ()
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = spawn "feh --bg-fill /home/jarlandre/Downloads/wallpaper.jpg"
+myStartupHook = spawn "feh --bg-fill /home/jarlandre/.xmonad/wallpaper.jpg"
                 >> spawn "xscreensaver -no-splash &"
                 >> spawn "xsetroot -cursor_name left_ptr"
 
@@ -278,10 +285,27 @@ myStartupHook = spawn "feh --bg-fill /home/jarlandre/Downloads/wallpaper.jpg"
 -- Xmobar 
 -- myBar = "xmobar"
 --
-myStatusBar = "xmobar -x0 /home/jarlandre/.xmonad/xmobar.conf"
-myLauncher  = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun"
-myBrowser   = "firefox"
+myStatusBar      = "xmobar -x0 /home/jarlandre/.xmonad/xmobar.conf"
+myLauncher       = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun"
+myBrowser        = "firefox"
 myScreenshotUtil = "shutter -s"
+myWindowGap      = 10
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Layouts
+mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
+mySpacing i = spacingRaw False (Border 0 i 0 i) True (Border i 0 i 0) True
+
+spacedLayout =
+  renamed [Replace "Normal"] $
+    mySpacing myWindowGap $
+        Full
+
+myLayout =
+  avoidStruts $ smartBorders myDefaultLayout
+  --smartBorders myDefaultLayout
+  where
+    myDefaultLayout = spacedLayout
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -306,6 +330,7 @@ defaults p = def {
         clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
+        layoutHook         = myLayout,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
