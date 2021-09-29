@@ -71,7 +71,7 @@ myFocusedBorderColor = "#859900"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawn "xterm -fa monaco -fs 13 -bg black -fg green &")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn myLauncher)
@@ -268,11 +268,7 @@ myLauncher  = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun
 myBrowser   = "firefox"
 
 main = do
-  xmproc <- spawnPipe myStatusBar
-
-  xmonad $ defaults xmproc
-
-defaults p = def {
+  xmonad $ def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
