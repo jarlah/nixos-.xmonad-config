@@ -71,7 +71,7 @@ myFocusedBorderColor = "#859900"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn "xterm -fa monaco -fs 13 -bg black -fg green &")
+    [ ((modm .|. shiftMask, xK_Return), spawn "alacritty")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn myLauncher)
